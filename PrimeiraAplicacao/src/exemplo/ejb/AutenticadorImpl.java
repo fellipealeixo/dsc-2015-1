@@ -1,26 +1,23 @@
 package exemplo.ejb;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+
+import exemplo.entidade.Usuario;
 
 @Stateless
 public class AutenticadorImpl implements Autenticador {
 
+	@EJB
+	private UsuarioDAO dao;
+	
 	@Override
 	public boolean autenticar(String loginVal, String senhaVal) {
-		// Declaração de logins estáticos
-		String login[] = {"admin", "usr", "chico"};
-		String senha[] = {"123", "123", "123"};
-		
-		for (int i = 0; i < login.length; i++) {
-			if (loginVal.equals(login[i])) {
-				if (senhaVal.equals(senha[i])) {
-					return true;
-				} else {
-					break;
-				}
-			}
+		Usuario usr = dao.getUsuario(loginVal, senhaVal);
+		if (usr == null) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 }
