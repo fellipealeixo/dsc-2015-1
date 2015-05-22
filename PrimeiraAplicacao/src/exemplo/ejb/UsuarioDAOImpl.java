@@ -16,7 +16,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	
 	@Override
 	public Usuario getUsuario(String login, String senha) {
-		Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.login = :login AND u.senha = :senha");
+		Query query = em.createNamedQuery("getUserByLogin");
 		query.setParameter("login", login);
 		query.setParameter("senha", senha);
 		Usuario usr = null;
