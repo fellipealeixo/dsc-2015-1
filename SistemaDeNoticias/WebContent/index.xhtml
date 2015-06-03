@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" version="2.0">
+    <jsp:directive.page language="java"
+        contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" />
+    <jsp:text>
+        <![CDATA[ <?xml version="1.0" encoding="ISO-8859-1" ?> ]]>
+    </jsp:text>
+    <jsp:text>
+        <![CDATA[ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> ]]>
+    </jsp:text>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Insert title here</title>
+</head>
+<body>
+<f:view>
+	<h2>Sistema de Notícias</h2>
+	<hr/>
+		<h:form>Login: <h:inputText></h:inputText> Senha: <h:inputSecret></h:inputSecret>
+			<h:button value="Entrar no Sistema"></h:button>   - <h:commandLink action="cadastroUsr.xhtml">
+				<h:outputText value="Efetue o seu cadastro AQUI!"></h:outputText>
+			</h:commandLink>
+		</h:form>
+	<hr/>
+	<h3>Notícias Cadastradas</h3>
+		<h:form>
+			<h:inputTextarea label="Cadastre aqui a sua notícia..."></h:inputTextarea>
+			<h:commandButton value="Cadastrar Nova Notícia"></h:commandButton>
+		</h:form>
+		<h:dataTable border="0" var="noticia" value="#{noticiasMB.noticias}">
+			<h:column id="column1">
+				<h4>
+				Autor: <h:outputText value="#{noticia.usuario.nome}"></h:outputText><br/>
+				Data: <h:outputText value="#{noticia.data}"></h:outputText><br/>
+				</h4>
+				<h:outputText value="#{noticia.conteudo}"></h:outputText>
+			</h:column>
+		</h:dataTable>
+	</f:view>
+</body>
+</html>
+</jsp:root>
