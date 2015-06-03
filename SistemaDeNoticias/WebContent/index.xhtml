@@ -4,29 +4,71 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <head>
+<<<<<<< Upstream, based on origin/master
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title>Insert title here</title>
+=======
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+>>>>>>> c26b4da Implementação da funcionalidade: "cadastrar usuário".
+<title>Sistema de Notícias</title>
 </head>
 <body>
+<<<<<<< Upstream, based on origin/master
 <f:view>
 	<h2>Sistema de Notícias</h2>
 	<hr/>
-		<h:form>Login: <h:inputText></h:inputText> Senha: <h:inputSecret></h:inputSecret>
+		<h:form rendered="#{usuarioMB.notLogado}">
+			Login: <h:inputText></h:inputText> Senha: <h:inputSecret></h:inputSecret>
 			<h:button value="Entrar no Sistema"></h:button>   - <h:commandLink action="cadastroUsr.xhtml">
-				<h:outputText value="Efetue o seu cadastro AQUI!"></h:outputText>
+				<h:outputText value="Clique AQUI para efetuar o seu cadastro"></h:outputText>
 			</h:commandLink>
 		</h:form>
-	<hr/>
-	<h3>Notícias Cadastradas</h3>
-		<h:form>
-			<h:inputTextarea label="Cadastre aqui a sua notícia..."></h:inputTextarea>
-			<h:commandButton value="Cadastrar Nova Notícia"></h:commandButton>
+		<h:form rendered="#{usuarioMB.logado}">
+			<h:outputText value="Bem vindo, #{usuarioMB.usuario.login} - "></h:outputText>
+			<h:commandLink action="#{usuarioMB.logout}">
+				<h:outputText value="SAIR do sistema"></h:outputText>
+=======
+	<f:view>
+		<h2>Sistema de Notícias</h2>
+		<hr />
+		<font color="blue">
+			<h:outputText rendered="#{usuarioMB.comMensagem}" value="#{usuarioMB.msg}"></h:outputText>
+		</font>
+		<h:form rendered="#{usuarioMB.notLogado}">
+			Login: <h:inputText></h:inputText> Senha: <h:inputSecret></h:inputSecret>
+			<h:button value="Entrar no Sistema"></h:button>   - <h:commandLink
+				action="cadastroUsr.xhtml">
+				<h:outputText value="Clique AQUI para efetuar o seu cadastro"></h:outputText>
+>>>>>>> c26b4da Implementação da funcionalidade: "cadastrar usuário".
+			</h:commandLink>
 		</h:form>
-		<h:dataTable border="0" var="noticia" value="#{noticiasMB.noticias}">
+		<h:form rendered="#{usuarioMB.logado}">
+			<h:outputText value="Bem vindo, #{usuarioMB.usuario.login} - "></h:outputText>
+			<h:commandLink action="#{usuarioMB.logout}">
+				<h:outputText value="SAIR do sistema"></h:outputText>
+			</h:commandLink>
+		</h:form>
+		<hr />
+
+		<h:form rendered="#{usuarioMB.logado}">
+			<h:outputText value="Digite uma nova notícia:  "></h:outputText>
+			<h:inputTextarea cols="40" rows="2" value="#{usuarioMB.noticia}"></h:inputTextarea>
+			<h:commandButton value="Cadastrar Nova Notícia"
+				action="#{usuarioMB.cadastrarNoticia}"></h:commandButton>
+		</h:form>
+		<h:outputText rendered="#{noticiasMB.semNoticias}"
+			value="Nenhuma notícia cadastrada no sistema..."></h:outputText>
+		<h:dataTable rendered="#{noticiasMB.comNoticias}" border="0"
+			var="noticia" value="#{noticiasMB.noticias}">
+			<f:facet name="header">
+				<h3>Notícias Cadastradas</h3>
+			</f:facet>
 			<h:column id="column1">
 				<h4>
-				Autor: <h:outputText value="#{noticia.usuario.nome}"></h:outputText><br/>
-				Data: <h:outputText value="#{noticia.data}"></h:outputText><br/>
+					Autor:
+					<h:outputText value="#{noticia.usuario.login}"></h:outputText>
+					<br /> Data:
+					<h:outputText value="#{noticia.data}"></h:outputText>
+					<br />
 				</h4>
 				<h:outputText value="#{noticia.conteudo}"></h:outputText>
 			</h:column>

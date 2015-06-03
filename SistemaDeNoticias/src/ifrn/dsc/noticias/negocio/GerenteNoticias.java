@@ -4,13 +4,14 @@ import ifrn.dsc.noticias.modelo.Comentario;
 import ifrn.dsc.noticias.modelo.Noticia;
 import ifrn.dsc.noticias.modelo.Usuario;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GerenteNoticias {
 	private Map<String, Usuario> usuarios;
 	private Map<Integer, Noticia> noticias;
-	private GerenteNoticias instancia = null;
+	private static GerenteNoticias instancia = null;
 	private int idNoticia = 1;
 
 	private GerenteNoticias() {
@@ -19,7 +20,7 @@ public class GerenteNoticias {
 		noticias = new HashMap<Integer, Noticia>();
 	}
 	
-	public GerenteNoticias getInstancia() {
+	public static GerenteNoticias getInstancia() {
 		if (instancia == null) {
 			instancia = new GerenteNoticias();
 		}
@@ -33,13 +34,17 @@ public class GerenteNoticias {
 		usuarios.put(novo.getLogin(), novo);
 		return true;
 	}
+	
+	public Collection<Noticia> getAllNoticias() {
+		return noticias.values();
+	}
 
 	public boolean adicionaNoticia(Usuario usr, Noticia noticia) {
 		if (usr != null && noticia != null) {
 			noticia.setId(idNoticia++);
 			usr.addNoticia(noticia);
-			noticias.put(noticia.getId(), noticia);
-			return true;
+			Noticia n = noticias.put(noticia.getId(), noticia);
+			return n == null;
 		}
 		return false;
 	}
@@ -78,3 +83,4 @@ public class GerenteNoticias {
 		return false;
 	}
 }
+>>>>>>> c26b4da Implementação da funcionalidade: "cadastrar usuário".
