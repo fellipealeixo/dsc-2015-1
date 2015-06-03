@@ -1,17 +1,19 @@
 package ifrn.dsc.noticias.modelo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Usuario {
 	private String login;
 	private String senha;
-	private List<Noticia> noticias;
+	private Map<Integer, Noticia> noticias;
 	private List<Comentario> comentarios;
 	
 	public Usuario() {
 		super();
-		noticias = new ArrayList<Noticia>();
+		noticias = new HashMap<Integer, Noticia>();
 		comentarios = new ArrayList<Comentario>();
 	}
 
@@ -19,7 +21,7 @@ public class Usuario {
 		super();
 		this.login = login;
 		this.senha = senha;
-		noticias = new ArrayList<Noticia>();
+		noticias = new HashMap<Integer, Noticia>();
 		comentarios = new ArrayList<Comentario>();
 	}
 
@@ -39,11 +41,11 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	public List<Noticia> getNoticias() {
+	public Map<Integer, Noticia> getNoticias() {
 		return noticias;
 	}
 
-	public void setNoticias(List<Noticia> noticias) {
+	public void setNoticias(Map<Integer, Noticia> noticias) {
 		this.noticias = noticias;
 	}
 
@@ -57,19 +59,18 @@ public class Usuario {
 
 	public boolean addNoticia(Noticia n) {
 		n.setUsuario(this);
-		return noticias.add(n);
+		noticias.put(n.getId(), n);
+		return true;
 	}
 
-	public boolean removeNoticia(Noticia n) {
-		return noticias.remove(n);
+	public boolean removeNoticia(int idNoticia) {
+		Noticia n = noticias.remove(idNoticia);
+		return n != null;
 	}
 	
-	public boolean alteraNoticia(Noticia antiga, String novoTexto) {
-		if (noticias.contains(antiga)) {
-			antiga.setConteudo(novoTexto);
-			return true;
-		}
-		return false;
+	public boolean alteraNoticia(int idNoticia, Noticia alterada) {
+		Noticia n = noticias.put(idNoticia, alterada);
+		return n != null;
 	}
 	
 	public boolean addComentario(Comentario c) {

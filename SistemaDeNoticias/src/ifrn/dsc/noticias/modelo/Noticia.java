@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Noticia {
+	private int id;
 	private String conteudo;
 	private Date data;
 	private Usuario usuario;
@@ -13,10 +14,19 @@ public class Noticia {
 		super();
 	}
 	
-	public Noticia(String conteudo, Date data) {
+	public Noticia(int id, String conteudo, Date data) {
 		super();
+		this.id = id;
 		this.conteudo = conteudo;
 		this.data = data;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getConteudo() {
