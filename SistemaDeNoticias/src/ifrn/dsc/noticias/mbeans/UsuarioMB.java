@@ -95,20 +95,6 @@ public class UsuarioMB {
 		return "cadastroUsr.xhtml";
 	}
 	
-	public String logout() {
-		usuario = null;
-				usuario = new Usuario(login, senha1);
-				gerente.cadastraUsuario(usuario);
-				return "index.xhtml";
-			} else {
-				this.setMsg("As senhas informadas precisam ser iguais!");
-			}
-		} else {
-			this.setMsg("Todas os dados necessitam ser informadas!");
-		}
-		return "cadastroUsr.xhtml";
-	}
-	
 	public String cadastrarNoticia() {
 		if (noticia != null && !noticia.isEmpty()) {
 			Noticia nova = new Noticia();

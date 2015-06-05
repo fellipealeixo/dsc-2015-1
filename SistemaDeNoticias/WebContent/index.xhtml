@@ -4,29 +4,10 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <head>
-<<<<<<< Upstream, based on origin/master
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-=======
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
->>>>>>> c26b4da Implementação da funcionalidade: "cadastrar usuário".
 <title>Sistema de Notícias</title>
 </head>
 <body>
-<<<<<<< Upstream, based on origin/master
-<f:view>
-	<h2>Sistema de Notícias</h2>
-	<hr/>
-		<h:form rendered="#{usuarioMB.notLogado}">
-			Login: <h:inputText></h:inputText> Senha: <h:inputSecret></h:inputSecret>
-			<h:button value="Entrar no Sistema"></h:button>   - <h:commandLink action="cadastroUsr.xhtml">
-				<h:outputText value="Clique AQUI para efetuar o seu cadastro"></h:outputText>
-			</h:commandLink>
-		</h:form>
-		<h:form rendered="#{usuarioMB.logado}">
-			<h:outputText value="Bem vindo, #{usuarioMB.usuario.login} - "></h:outputText>
-			<h:commandLink action="#{usuarioMB.logout}">
-				<h:outputText value="SAIR do sistema"></h:outputText>
-=======
 	<f:view>
 		<h2>Sistema de Notícias</h2>
 		<hr />
@@ -35,10 +16,9 @@
 		</font>
 		<h:form rendered="#{usuarioMB.notLogado}">
 			Login: <h:inputText></h:inputText> Senha: <h:inputSecret></h:inputSecret>
-			<h:button value="Entrar no Sistema"></h:button>   - <h:commandLink
+			<h:button value="Entrar no Sistema"></h:button> - <h:commandLink
 				action="cadastroUsr.xhtml">
 				<h:outputText value="Clique AQUI para efetuar o seu cadastro"></h:outputText>
->>>>>>> c26b4da Implementação da funcionalidade: "cadastrar usuário".
 			</h:commandLink>
 		</h:form>
 		<h:form rendered="#{usuarioMB.logado}">

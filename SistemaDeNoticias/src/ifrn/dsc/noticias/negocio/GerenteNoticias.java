@@ -83,4 +83,3 @@ public class GerenteNoticias {
 		return false;
 	}
 }
->>>>>>> c26b4da Implementação da funcionalidade: "cadastrar usuário".
