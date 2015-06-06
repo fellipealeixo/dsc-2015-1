@@ -39,6 +39,10 @@ public class GerenteNoticias {
 		return noticias.values();
 	}
 
+	public Noticia getNoticia(int id) {
+		return noticias.get(id);
+	}
+	
 	public boolean adicionaNoticia(Usuario usr, Noticia noticia) {
 		if (usr != null && noticia != null) {
 			noticia.setId(idNoticia++);

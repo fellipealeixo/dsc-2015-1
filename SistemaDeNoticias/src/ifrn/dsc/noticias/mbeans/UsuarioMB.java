@@ -3,6 +3,7 @@ package ifrn.dsc.noticias.mbeans;
 import ifrn.dsc.noticias.modelo.Noticia;
 import ifrn.dsc.noticias.modelo.Usuario;
 import ifrn.dsc.noticias.negocio.GerenteNoticias;
+
 import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
@@ -16,8 +17,9 @@ public class UsuarioMB {
 	private String login, senha1, senha2;
 	private Usuario usuario;
 	private String msg;
-
 	private String noticia;
+	private int noticiaRemover;
+	private Usuario autorNoticia;
 	
 	public UsuarioMB() {
 		super();
@@ -78,6 +80,22 @@ public class UsuarioMB {
 		this.noticia = noticia;
 	}
 
+	public int getNoticiaRemover() {
+		return noticiaRemover;
+	}
+
+	public void setNoticiaRemover(int noticiaRemover) {
+		this.noticiaRemover = noticiaRemover;
+	}
+
+	public Usuario getAutorNoticia() {
+		return autorNoticia;
+	}
+
+	public void setAutorNoticia(Usuario autorNoticia) {
+		this.autorNoticia = autorNoticia;
+	}
+
 	public String cadastraUsuario() {
 		if (login != null && !login.isEmpty() && 
 				senha1 != null && !senha1.isEmpty() && 
@@ -107,6 +125,12 @@ public class UsuarioMB {
 		return "index.xhtml";
 	}
 	
+	public String logout() {
+		usuario = null;
+		login = "";
+		return "index.xhtml";
+	}
+	
 	public String cadastrarNoticia() {
 		if (noticia != null && !noticia.isEmpty()) {
 			Noticia nova = new Noticia();
@@ -125,9 +149,21 @@ public class UsuarioMB {
 		return "index.xhtml";
 	}
 	
-	public String logout() {
-		usuario = null;
-		login = "";
+	public boolean autorNoticia(int noticia) {
+		Noticia note = gerente.getNoticia(noticia);
+		if (note.getUsuario() == usuario) {
+			return true;
+		}
+		return false;
+	}
+	
+	public String removerNoticia() {
+		boolean ok = gerente.removeNoticia(autorNoticia, noticiaRemover);
+		if (ok) {
+			this.setMsg("Notícia removida com sucesso!");
+		} else {
+			this.setMsg("Não foi possível remover a referida notícia!");
+		}
 		return "index.xhtml";
 	}
 	

@@ -14,7 +14,7 @@
 		<font color="blue">
 			<h:outputText rendered="#{usuarioMB.comMensagem}" value="#{usuarioMB.msg}"></h:outputText>
 		</font>
-		<h:form rendered="#{usuarioMB.notLogado}">
+		<h:form  id="f1" rendered="#{usuarioMB.notLogado}">
 			Login: <h:inputText value="#{usuarioMB.login}"></h:inputText> 
 			Senha: <h:inputSecret value="#{usuarioMB.senha1}"></h:inputSecret>
 			<h:commandButton action="#{usuarioMB.efetuarLogin}" value="Entrar no Sistema"></h:commandButton> - 
@@ -22,7 +22,7 @@
 				<h:outputText value="Clique AQUI para efetuar o seu cadastro"></h:outputText>
 			</h:commandLink>
 		</h:form>
-		<h:form rendered="#{usuarioMB.logado}">
+		<h:form  id="f2" rendered="#{usuarioMB.logado}">
 			<h:outputText value="Bem vindo, #{usuarioMB.usuario.login} - "></h:outputText>
 			<h:commandLink action="#{usuarioMB.logout}">
 				<h:outputText value="SAIR do sistema"></h:outputText>
@@ -30,7 +30,7 @@
 		</h:form>
 		<hr />
 
-		<h:form rendered="#{usuarioMB.logado}">
+		<h:form  id="f3" rendered="#{usuarioMB.logado}">
 			<h:outputText value="Digite uma nova notícia:  "></h:outputText>
 			<h:inputTextarea cols="40" rows="2" value="#{usuarioMB.noticia}"></h:inputTextarea>
 			<h:commandButton value="Cadastrar Nova Notícia"
@@ -52,6 +52,16 @@
 					<br />
 				</h4>
 				<h:outputText value="#{noticia.conteudo}"></h:outputText>
+				<h:form id="f4">
+					<h:commandLink id="c1" value="(Remover)" 
+								rendered="#{usuarioMB.autorNoticia(noticia.id)}"
+								action="#{usuarioMB.removerNoticia}">
+						<f:setPropertyActionListener value="#{noticia.id}" target="#{usuarioMB.noticiaRemover}">
+						</f:setPropertyActionListener>
+						<f:setPropertyActionListener value="#{noticia.usuario}" target="#{usuarioMB.autorNoticia}">
+						</f:setPropertyActionListener>
+					</h:commandLink>
+				</h:form>
 			</h:column>
 		</h:dataTable>
 	</f:view>
