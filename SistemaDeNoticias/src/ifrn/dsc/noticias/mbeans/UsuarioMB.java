@@ -95,6 +95,18 @@ public class UsuarioMB {
 		return "cadastroUsr.xhtml";
 	}
 	
+	public String efetuarLogin() {
+		if (login != null && !login.isEmpty() && senha1 != null && !senha1.isEmpty() ) {
+			usuario = gerente.autenticar(login, senha1);
+			if (usuario == null) {
+				this.setMsg("Informações não correspondem a um usuário válido!");
+			}
+		} else {
+			this.setMsg("Forneça as informações de login e senha!");
+		}
+		return "index.xhtml";
+	}
+	
 	public String cadastrarNoticia() {
 		if (noticia != null && !noticia.isEmpty()) {
 			Noticia nova = new Noticia();
@@ -115,6 +127,7 @@ public class UsuarioMB {
 	
 	public String logout() {
 		usuario = null;
+		login = "";
 		return "index.xhtml";
 	}
 	

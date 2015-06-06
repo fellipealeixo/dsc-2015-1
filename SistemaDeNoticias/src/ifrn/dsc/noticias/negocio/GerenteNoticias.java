@@ -82,4 +82,14 @@ public class GerenteNoticias {
 		}
 		return false;
 	}
+
+	public Usuario autenticar(String login, String senha1) {
+		if ( usuarios.containsKey(login) ) {
+			Usuario usr = usuarios.get(login);
+			if ( usr.getSenha().equals(senha1) ) {
+				return usr;
+			}
+		}
+		return null;
+	}
 }

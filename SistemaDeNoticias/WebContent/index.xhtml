@@ -15,9 +15,10 @@
 			<h:outputText rendered="#{usuarioMB.comMensagem}" value="#{usuarioMB.msg}"></h:outputText>
 		</font>
 		<h:form rendered="#{usuarioMB.notLogado}">
-			Login: <h:inputText></h:inputText> Senha: <h:inputSecret></h:inputSecret>
-			<h:button value="Entrar no Sistema"></h:button> - <h:commandLink
-				action="cadastroUsr.xhtml">
+			Login: <h:inputText value="#{usuarioMB.login}"></h:inputText> 
+			Senha: <h:inputSecret value="#{usuarioMB.senha1}"></h:inputSecret>
+			<h:commandButton action="#{usuarioMB.efetuarLogin}" value="Entrar no Sistema"></h:commandButton> - 
+			<h:commandLink action="cadastroUsr.xhtml">
 				<h:outputText value="Clique AQUI para efetuar o seu cadastro"></h:outputText>
 			</h:commandLink>
 		</h:form>
