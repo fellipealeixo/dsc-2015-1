@@ -1,19 +1,19 @@
 package ifrn.dsc.noticias.mbeans;
 
+import ifrn.dsc.noticias.ejb.FachadaSistema;
+import ifrn.dsc.noticias.exceptions.LoginExistenteExecption;
 import ifrn.dsc.noticias.modelo.Noticia;
 import ifrn.dsc.noticias.modelo.Usuario;
-import ifrn.dsc.noticias.negocio.GerenteNoticias;
 
 import java.util.Date;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name="usuarioMB")
 @SessionScoped
-public class UsuarioMB {
-	private GerenteNoticias gerente;
-	
+public class UsuarioMB {	
 	private String login, senha1, senha2;
 	private Usuario usuario;
 	private String msg;
@@ -21,13 +21,14 @@ public class UsuarioMB {
 	private int noticiaRemover;
 	private Usuario autorNoticia;
 	
+	@EJB
+	private FachadaSistema fachada;
+	
 	public UsuarioMB() {
 		super();
 		usuario = null;
 		msg = "";
 		noticia = "";
-		
-		gerente = GerenteNoticias.getInstancia();
 	}
 
 	public String getLogin() {
@@ -102,8 +103,12 @@ public class UsuarioMB {
 				senha2 != null && !senha2.isEmpty()) {
 			if (senha1.equals(senha2)) {
 				usuario = new Usuario(login, senha1);
-				gerente.cadastraUsuario(usuario);
-				return "index.xhtml";
+				try {
+					fachada.cadastraUsuario(usuario);
+					return "index.xhtml";
+				} catch (LoginExistenteExecption e) {
+					this.setMsg(e.getMessage());
+				}
 			} else {
 				this.setMsg("As senhas informadas precisam ser iguais!");
 			}
@@ -115,7 +120,7 @@ public class UsuarioMB {
 	
 	public String efetuarLogin() {
 		if (login != null && !login.isEmpty() && senha1 != null && !senha1.isEmpty() ) {
-			usuario = gerente.autenticar(login, senha1);
+			usuario = fachada.autenticar(login, senha1);
 			if (usuario == null) {
 				this.setMsg("Informações não correspondem a um usuário válido!");
 			}
@@ -136,7 +141,7 @@ public class UsuarioMB {
 			Noticia nova = new Noticia();
 			nova.setConteudo(noticia);
 			nova.setData(new Date());
-			boolean ok = gerente.adicionaNoticia(usuario, nova);
+			boolean ok = fachada.adicionaNoticia(usuario, nova);
 			noticia = "";
 			if (ok) {
 				this.setMsg("Notícia cadastrada com sucesso!");
@@ -149,16 +154,16 @@ public class UsuarioMB {
 		return "index.xhtml";
 	}
 	
-	public boolean autorNoticia(int noticia) {
-		Noticia note = gerente.getNoticia(noticia);
-		if (note.getUsuario() == usuario) {
+	public boolean autorNoticia(int idNoticia) {
+		Noticia noticia = fachada.getNoticia(idNoticia);
+		if (usuario != null && noticia.getUsuario().getId() == this.usuario.getId()) {
 			return true;
 		}
 		return false;
 	}
 	
 	public String removerNoticia() {
-		boolean ok = gerente.removeNoticia(autorNoticia, noticiaRemover);
+		boolean ok = fachada.removeNoticia(autorNoticia, noticiaRemover);
 		if (ok) {
 			this.setMsg("Notícia removida com sucesso!");
 		} else {

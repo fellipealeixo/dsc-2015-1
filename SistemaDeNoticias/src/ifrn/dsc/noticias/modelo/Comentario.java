@@ -1,6 +1,23 @@
 package ifrn.dsc.noticias.modelo;
 
-public class Comentario {
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+@NamedQueries({
+	@NamedQuery(name="getComentariosByNoticia", query="SELECT c FROM Comentario c WHERE c.noticia.id = :idNticia")
+})
+
+@Entity
+public class Comentario implements Serializable {
+	private static final long serialVersionUID = -5437635284730953155L;
+	private int id;
 	private String texto;
 	private Noticia noticia;
 	private Usuario usuario;
@@ -18,6 +35,16 @@ public class Comentario {
 		usuario.addComentario(this);
 	}
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getTexto() {
 		return texto;
 	}
@@ -26,6 +53,7 @@ public class Comentario {
 		this.texto = texto;
 	}
 	
+	@ManyToOne
 	public Noticia getNoticia() {
 		return noticia;
 	}
@@ -35,6 +63,7 @@ public class Comentario {
 		noticia.addComentario(this);
 	}
 	
+	@ManyToOne
 	public Usuario getUsuario() {
 		return usuario;
 	}

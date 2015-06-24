@@ -1,9 +1,28 @@
 package ifrn.dsc.noticias.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Noticia {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@NamedQueries({
+	@NamedQuery(name="listNoticias", query="SELECT n FROM Noticia n ORDER BY n.data DESC")
+})
+
+@Entity
+public class Noticia implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String conteudo;
 	private Date data;
@@ -21,6 +40,8 @@ public class Noticia {
 		this.data = data;
 	}
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
@@ -37,6 +58,7 @@ public class Noticia {
 		this.conteudo = conteudo;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getData() {
 		return data;
 	}
@@ -45,6 +67,7 @@ public class Noticia {
 		this.data = data;
 	}
 
+	@ManyToOne
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -53,6 +76,7 @@ public class Noticia {
 		this.usuario = usuario;
 	}
 
+	@OneToMany(mappedBy="noticia", cascade=CascadeType.ALL)
 	public List<Comentario> getComentarios() {
 		return comentarios;
 	}

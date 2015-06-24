@@ -1,35 +1,38 @@
 package ifrn.dsc.noticias.mbeans;
 
+import ifrn.dsc.noticias.ejb.FachadaSistema;
 import ifrn.dsc.noticias.modelo.Noticia;
-import ifrn.dsc.noticias.negocio.GerenteNoticias;
 
-import java.util.Collection;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
 @ManagedBean(name="noticiasMB")
 @ApplicationScoped
 public class NoticiasMB {
-	private GerenteNoticias gerente;
 	
-	private Collection<Noticia> noticias;
+	@EJB
+	private FachadaSistema fachada;
+	
+	private List<Noticia> noticias;
 	
 	public NoticiasMB() {
-		super();		
-		gerente = GerenteNoticias.getInstancia();
-		noticias = gerente.getAllNoticias();
+		super();
+	}
+	
+	@PostConstruct
+	public void init() {
+		this.noticias = fachada.getAllNoticias();
 	}
 
-	public Collection<Noticia> getNoticias() {
-		this.noticias = gerente.getAllNoticias();
+	public List<Noticia> getNoticias() {
+		this.noticias = fachada.getAllNoticias();
 		return noticias;
 	}
 
-	public void setNoticias(Collection<Noticia> noticias) {
-		this.noticias = noticias;
-	}
-	
 	public boolean isComNoticias() {
 		return !noticias.isEmpty();
 	}
